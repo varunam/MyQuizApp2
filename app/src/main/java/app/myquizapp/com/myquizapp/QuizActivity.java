@@ -196,6 +196,12 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private void startNewSet(LoaderManager loaderManager, Bundle savedInstanceState) {
+        if(questionsSetCompleted==3)
+        {
+            Toast.makeText(getApplicationContext(),"All sets completed!",Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, QuizHomeActivity.class));
+            return;
+        }
         resetCardColors();
         listOfQuestions = new ArrayList<>();
         questionsAttended = 0;
@@ -297,10 +303,10 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
             public String loadInBackground() {
                 //String level = bundle.getString(LEVEL);
                 try {
-                    String level = bundle.getString(LEVEL_KEY);
-                    String fileName = level + ".json";
+                    /*String level = bundle.getString(LEVEL_KEY);
+                    String fileName = level + ".json";*/
                     BufferedReader bufferedReader = new BufferedReader(
-                            new InputStreamReader(getAssets().open(fileName)));
+                            new InputStreamReader(getAssets().open("easy.json")));
                     String buffer;
                     StringBuilder stringBuilder = new StringBuilder();
                     while ((buffer = bufferedReader.readLine()) != null)
@@ -308,7 +314,7 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
                     Log.v("QuizActivity.class", "Returned Json String read from the file");
                     return stringBuilder.toString();
                 } catch (IOException e) {
-                    Log.e("QuizActivity.class", "Error while reading " + bundle.getString(LEVEL_KEY) + " file from assets folder");
+                    //Log.e("QuizActivity.class", "Error while reading " + bundle.getString(LEVEL_KEY) + " file from assets folder");
                     e.printStackTrace();
                     return null;
                 }
