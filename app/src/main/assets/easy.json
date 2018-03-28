@@ -1,0 +1,108 @@
+{
+  "Questions": {
+      "Questions set 0": [
+        {
+          "Question": "___________ hesaru Enu? \n Eng: What is your name?",
+          "solution": 1,
+          "options": {
+            "one": "ninna",
+            "two": "nanna",
+            "three": "ninage",
+            "four": "neenu"
+          }
+        },
+        {
+          "Question": "thinDi ___________? \n Eng: Had breakfast?",
+          "solution": 2,
+          "options": {
+            "one": "aaythu",
+            "two": "aaytha?",
+            "three": "aagilla",
+            "four": "aagilwa?"
+          }
+        },
+        {
+          "Question": "Question three",
+          "solution": 4,
+          "options": {
+            "one": "value",
+            "two": "value",
+            "three": "value",
+            "four": "value"
+          }
+        },
+        {
+          "Question": "Question four",
+          "solution": 1,
+          "options": {
+            "one": "value",
+            "two": "value",
+            "three": "value",
+            "four": "value"
+          }
+        },
+        {
+          "Question": "Question five",
+          "solution": 1,
+          "options": {
+            "one": "value",
+            "two": "value",
+            "three": "value",
+            "four": "value"
+          }
+        }
+      ],
+    "Questions set 2": [
+      {
+        "Question": "Eng: What is your name? \n ___________ hesaru Enu? ",
+        "solution": 1,
+        "options": {
+          "one": "ninna",
+          "two": "nanna",
+          "three": "ninage",
+          "four": "neenu"
+        }
+      },
+      {
+        "Question": "thinDi ___________? \n Eng: Had breakfast?",
+        "solution": 2,
+        "options": {
+          "one": "aaythu",
+          "two": "aaytha?",
+          "three": "aagilla",
+          "four": "aagilwa?"
+        }
+      },
+      {
+        "Question": "Question three",
+        "solution": 4,
+        "options": {
+          "one": "value",
+          "two": "value",
+          "three": "value",
+          "four": "value"
+        }
+      },
+      {
+        "Question": "Question four",
+        "solution": 1,
+        "options": {
+          "one": "value",
+          "two": "value",
+          "three": "value",
+          "four": "value"
+        }
+      },
+      {
+        "Question": "Question five",
+        "solution": 1,
+        "options": {
+          "one": "value",
+          "two": "value",
+          "three": "value",
+          "four": "value"
+        }
+      }
+    ]
+    }
+}
