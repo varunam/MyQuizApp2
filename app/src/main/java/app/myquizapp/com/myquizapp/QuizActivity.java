@@ -97,7 +97,7 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
                         Log.d("QuizActivity.class", "LoaderBundle is loaded with \"EASY\" Value");
                         break;
                     case LEVEL_INTERMEDIATE:
-                         levelPrefs = getSharedPreferences(
+                        levelPrefs = getSharedPreferences(
                                 PREF_EASY, MODE_PRIVATE);
                         int intermedSetsCompleted = levelPrefs.getInt(PREF_INTERMED_SETS_COMPLETED, 0);
                         loaderBundle.putString(LEVEL_KEY, LEVEL_INTERMEDIATE);
@@ -115,7 +115,7 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
                 }
         }
 
-        questionsSetCompleted = levelPrefs.getInt(PREF_SET_KEY,0);
+        questionsSetCompleted = levelPrefs.getInt(PREF_SET_KEY, 0);
 
         //below section is triggering the Loader to load data.
         final LoaderManager loaderManager = getSupportLoaderManager();
@@ -173,16 +173,24 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
                     builder.setTitle("Quiz completed!")
                             .setMessage("You have answered " + questionsAnsweredCorrect +
                                     " right! Congratulations!")
-                            .setPositiveButton("Try new set", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    startNewSet(loaderManager, loaderBundle);
-                                }
-                            })
-                            .setNegativeButton("Thanks!", null)
-                            .create().show();
+                            .setNegativeButton("Thanks!", null);
+                    if (questionsSetCompleted != 3)
+                        builder.setPositiveButton("Try new set", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                startNewSet(loaderManager, loaderBundle);
+                            }
+                        });
+                    else
+                        builder.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                startActivity(new Intent(QuizActivity.this, QuizHomeActivity.class));
+                            }
+                        });
+                    builder.create().show();
                     SharedPreferences.Editor editor = levelPrefs.edit();
-                    editor.putInt(PREF_SET_KEY,questionsSetCompleted);
+                    editor.putInt(PREF_SET_KEY, questionsSetCompleted);
                     editor.apply();
                     return;
                 }
@@ -196,22 +204,16 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private void startNewSet(LoaderManager loaderManager, Bundle savedInstanceState) {
-        if(questionsSetCompleted==3)
-        {
-            Toast.makeText(getApplicationContext(),"All sets completed!",Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, QuizHomeActivity.class));
-            return;
-        }
         resetCardColors();
         listOfQuestions = new ArrayList<>();
         questionsAttended = 0;
         questionsAnsweredCorrect = 0;
-        questionsSetCompleted = levelPrefs.getInt(PREF_SET_KEY,0);
+        questionsSetCompleted = levelPrefs.getInt(PREF_SET_KEY, 0);
         loaderManager.restartLoader(QUIZ_LOADER_ID, savedInstanceState, QuizActivity.this);
     }
 
     private void updateCount() {
-        String count = (questionsAttended+1) + "/" + listOfQuestions.size();
+        String count = (questionsAttended + 1) + "/" + listOfQuestions.size();
         countTextView.setText(count);
     }
 
