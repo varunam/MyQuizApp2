@@ -65,7 +65,7 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quiz);
+        setContentView(R.layout.test_activity);
 
         //initializing all the views
         initViews();
@@ -173,7 +173,12 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
                     builder.setTitle("Quiz completed!")
                             .setMessage("You have answered " + questionsAnsweredCorrect +
                                     " right! Congratulations!")
-                            .setNegativeButton("Thanks!", null);
+                            .setNegativeButton("Thanks!", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    startActivity(new Intent(QuizActivity.this, QuizHomeActivity.class));
+                                }
+                            });
                     if (questionsSetCompleted != 3)
                         builder.setPositiveButton("Try new set", new DialogInterface.OnClickListener() {
                             @Override

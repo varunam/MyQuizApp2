@@ -28,8 +28,10 @@ public class QuizHomeActivity extends AppCompatActivity {
                 int setsCompleted = levelPrefs.getInt("set-key",0);
                 if(setsCompleted==3)
                 {
-                    Toast.makeText(getApplicationContext(),"All sets completed!",Toast.LENGTH_SHORT).show();
-                    return;
+                    Toast.makeText(getApplicationContext(),"All sets completed! Clearing it and taking you inside",Toast.LENGTH_SHORT).show();
+                    SharedPreferences.Editor editor = levelPrefs.edit();
+                    editor.putInt("set-key",0);
+                    editor.apply();
                 }
                 Intent intent = new Intent(QuizHomeActivity.this, QuizActivity.class);
                 intent.putExtra("level","easy");
