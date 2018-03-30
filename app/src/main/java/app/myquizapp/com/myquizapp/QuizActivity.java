@@ -172,37 +172,7 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
                 Toast.makeText(getApplicationContext(), "Answered Correct: " + questionsAnsweredCorrect, Toast.LENGTH_SHORT).show();
                 questionsAttended++;
                 if (questionsAttended == listOfQuestions.size()) {
-                    /*questionsSetCompleted++;
-                    builder.setTitle("Quiz completed!")
-                            .setMessage("You have answered " + questionsAnsweredCorrect +
-                                    " right! Congratulations!")
-                            .setNegativeButton("Thanks!", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    startActivity(new Intent(QuizActivity.this, QuizHomeActivity.class));
-                                }
-                            });
-                    if (questionsSetCompleted != 3)
-                        builder.setPositiveButton("Try new set", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                startNewSet(loaderManager, loaderBundle);
-                            }
-                        });
-                    else
-                        builder.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                startActivity(new Intent(QuizActivity.this, QuizHomeActivity.class));
-                            }
-                        });*/
-                    //builder.create().show();
-                    //Toast.makeText(getApplicationContext(),questionsSetCompleted,Toast.LENGTH_SHORT).show();
                     showResultDialog((questionsAnsweredCorrect*100)/listOfQuestions.size(),loaderBundle,loaderManager);
-                    SharedPreferences.Editor editor = levelPrefs.edit();
-                    editor.putInt(PREF_SET_KEY, questionsSetCompleted);
-                    editor.apply();
-                    setNextButtonStatus(false);
                     return;
                 }
                 updateCount();
@@ -249,9 +219,10 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
         }
         else
         {
-            resultHeader.setText("Well Done! Almost there...");
+            resultHeader.setText("You aced it!!..");
             tryNext.setVisibility(View.VISIBLE);
             tryAgain.setVisibility(View.GONE);
+            reviewQuiz.setVisibility(View.GONE);
         }
         Toast.makeText(view.getContext(),questionsSetCompleted+"",Toast.LENGTH_SHORT).show();
         if(questionsSetCompleted==2)
@@ -272,8 +243,13 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
         tryAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences.Editor editor = levelPrefs.edit();
+                editor.putInt(PREF_SET_KEY, questionsSetCompleted);
+                editor.apply();
+                setNextButtonStatus(false);
                 alertDialog.dismiss();
                 startNewSet(loaderManager, loaderBundle);
+
 
             }
         });
@@ -281,6 +257,11 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onClick(View view) {
                     questionsSetCompleted++;
+                SharedPreferences.Editor editor = levelPrefs.edit();
+                editor.putInt(PREF_SET_KEY, questionsSetCompleted);
+                editor.apply();
+                setNextButtonStatus(false);
+                Toast.makeText(view.getContext(),questionsSetCompleted+"",Toast.LENGTH_SHORT).show();
                     alertDialog.dismiss();
                     startNewSet(loaderManager, loaderBundle);
             }
@@ -288,6 +269,11 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
         exitQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                questionsSetCompleted++;
+                SharedPreferences.Editor editor = levelPrefs.edit();
+                editor.putInt(PREF_SET_KEY, questionsSetCompleted);
+                editor.apply();
+                setNextButtonStatus(false);
                 Intent i = new Intent(view.getContext(),QuizHomeActivity.class);
                 startActivity(i);
             }
@@ -312,10 +298,7 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
                         .startChooser();
             }
         });
-        SharedPreferences.Editor editor = levelPrefs.edit();
-        editor.putInt(PREF_SET_KEY, questionsSetCompleted);
-        editor.apply();
-        setNextButtonStatus(false);
+
     }
 
     private void startNewSet(LoaderManager loaderManager, Bundle savedInstanceState) {
