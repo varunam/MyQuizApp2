@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.app.ShareCompat;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AlertDialog;
@@ -14,8 +15,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -169,7 +172,7 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
                 Toast.makeText(getApplicationContext(), "Answered Correct: " + questionsAnsweredCorrect, Toast.LENGTH_SHORT).show();
                 questionsAttended++;
                 if (questionsAttended == listOfQuestions.size()) {
-                    questionsSetCompleted++;
+                    /*questionsSetCompleted++;
                     builder.setTitle("Quiz completed!")
                             .setMessage("You have answered " + questionsAnsweredCorrect +
                                     " right! Congratulations!")
@@ -192,11 +195,14 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 startActivity(new Intent(QuizActivity.this, QuizHomeActivity.class));
                             }
-                        });
-                    builder.create().show();
+                        });*/
+                    //builder.create().show();
+                    //Toast.makeText(getApplicationContext(),questionsSetCompleted,Toast.LENGTH_SHORT).show();
+                    showResultDialog((questionsAnsweredCorrect*100)/listOfQuestions.size(),loaderBundle,loaderManager);
                     SharedPreferences.Editor editor = levelPrefs.edit();
                     editor.putInt(PREF_SET_KEY, questionsSetCompleted);
                     editor.apply();
+                    setNextButtonStatus(false);
                     return;
                 }
                 updateCount();
@@ -206,6 +212,110 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
+    }
+
+    private void showResultDialog(int score, final Bundle loaderBundle, final LoaderManager loaderManager) {
+        View view= LayoutInflater.from(getApplicationContext()).inflate(R.layout.dialog_quiz_result,null);
+        TextView resultHeader = view.findViewById(R.id.resultHeaderID);
+        TextView result = view.findViewById(R.id.resultTextID);
+        Button tryAgain= view.findViewById(R.id.quizAgainID);
+        Button tryNext = view.findViewById(R.id.quizNextID);
+        Button exitQuiz = view.findViewById(R.id.quizExitID);
+        Button shareQuiz = view.findViewById(R.id.quizShareID);
+        Button reviewQuiz = view.findViewById(R.id.reviewQuizID);
+        ProgressBar resultProgressBar = view.findViewById(R.id.resultprogressBarID);
+
+        result.setText(score+"%");
+        resultProgressBar.setMax(100);
+        resultProgressBar.setProgress(score);
+
+        if(score<=50)
+        {
+            resultHeader.setText("Too bad..Please try again");
+            tryNext.setVisibility(View.GONE);
+            tryAgain.setVisibility(View.VISIBLE);
+        }
+        else if(score>50 && score<80 )
+        {
+            resultHeader.setText("Not bad! You can do better....");
+            tryNext.setVisibility(View.VISIBLE);
+            tryAgain.setVisibility(View.VISIBLE);
+        }
+        else if(score>=80 && score!=100)
+        {
+            resultHeader.setText("Well Done! Almost there...");
+            tryNext.setVisibility(View.VISIBLE);
+            tryAgain.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            resultHeader.setText("Well Done! Almost there...");
+            tryNext.setVisibility(View.VISIBLE);
+            tryAgain.setVisibility(View.GONE);
+        }
+        Toast.makeText(view.getContext(),questionsSetCompleted+"",Toast.LENGTH_SHORT).show();
+        if(questionsSetCompleted==2)
+        {
+            if(score==100)
+            {
+                tryAgain.setVisibility(View.GONE);
+                tryNext.setVisibility(View.GONE);
+            }
+            else
+                tryNext.setVisibility(View.GONE);
+        }
+        final AlertDialog alertDialog;
+        builder.setView(view).setCancelable(false);
+        alertDialog= builder.create();
+        alertDialog.show();
+
+        tryAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+                startNewSet(loaderManager, loaderBundle);
+
+            }
+        });
+        tryNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    questionsSetCompleted++;
+                    alertDialog.dismiss();
+                    startNewSet(loaderManager, loaderBundle);
+            }
+        });
+        exitQuiz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(view.getContext(),QuizHomeActivity.class);
+                startActivity(i);
+            }
+        });
+        reviewQuiz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(),"Review coming soon",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        shareQuiz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String title="I secured %";
+                String mimeType = "text/plain";
+                String shareText=" Share this with all";
+                ShareCompat.IntentBuilder.from(QuizActivity.this)
+                        .setChooserTitle(title)
+                        .setType(mimeType)
+                        .setText(shareText)
+                        .startChooser();
+            }
+        });
+        SharedPreferences.Editor editor = levelPrefs.edit();
+        editor.putInt(PREF_SET_KEY, questionsSetCompleted);
+        editor.apply();
+        setNextButtonStatus(false);
     }
 
     private void startNewSet(LoaderManager loaderManager, Bundle savedInstanceState) {
