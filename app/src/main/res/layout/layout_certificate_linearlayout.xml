@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="350dp"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/layout_borders"
+    android:id="@+id/certificateLayoutID"
+    android:layout_height="450dp">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        app:srcCompat="@drawable/certification_icon" />
+
+    <TextView
+        android:id="@+id/userNameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:gravity="center"
+        android:text="TextView"
+        android:textColor="#E64A19"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        tools:text="@string/user_name" />
+
+    <TextView
+        android:id="@+id/certificateBodyTextView"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:fontFamily="sans-serif"
+        android:textColor="#7436f1"
+        android:gravity="center"
+        android:text="@string/certificateText"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_marginTop="20dp"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:src="@drawable/kannada_kali" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="140dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="25dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:srcCompat="@drawable/newlogo" />
+
+</LinearLayout>

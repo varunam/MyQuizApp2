@@ -3,18 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#ffae00"
+    android:background="@drawable/layout_borders"
     android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
             android:id="@+id/resultHeaderID"
             android:text="Not bad! You have secured "
-            style="@style/AlertDialog.AppCompat.Light"
-            android:textSize="30sp"
-            android:textStyle="bold"
+            style="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+            android:fontFamily="monospace"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="25dp"
             android:layout_marginBottom="20dp"
@@ -110,13 +108,13 @@
 
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:text="Exit"
                 android:textStyle="bold"
                 android:elevation="@dimen/cardview_compat_inset_shadow"
-                android:textSize="20sp"
-                android:textColor="#ffffff"
-                android:background="#048af1"
+                android:textSize="18sp"
+                android:textColor="#fefe"
+                android:background="#7C4DFF"
                 android:id="@+id/quizExitID"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="20dp"/>

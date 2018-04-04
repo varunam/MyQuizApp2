@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">MyQuizApp</string>
     <string name="easyKey">easyKey</string>
+    <string name="certificateText">\t\t has successfully completed quiz \n(Level - %1$s) in the <b>\"Learn Kannada Smartapp\"</b> and secured %2$s.</string>
+    <string name="user_name">%1$s Rohith</string>
+    <string name="resultShareBody">Sharing result</string>
+    <string name="helpShareBody">Share for help body...</string>
 </resources>

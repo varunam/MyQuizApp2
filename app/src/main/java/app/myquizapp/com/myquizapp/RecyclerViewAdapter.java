@@ -39,9 +39,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.correctAnswer.setText(mListOfQuestions.get(position).getOptions()[solutionIndex]);
         holder.chosenAnswer.setText(mListOfAnswers.get(position));
         if(holder.correctAnswer.getText().toString().equals(holder.chosenAnswer.getText().toString()))
-            holder.imageView.setImageResource(R.drawable.ic_launcher_background);
+            holder.imageView.setImageResource(R.drawable.correct);
         else
-            holder.imageView.setImageResource(R.drawable.ic_launcher_foreground);
+            holder.imageView.setImageResource(R.drawable.wrong_icon);
     }
 
     @Override
