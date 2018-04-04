@@ -10,6 +10,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,9 +62,14 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private boolean chosenAnswer = false;
     private int questionsAttended = 0, questionsAnsweredCorrect = 0;
-    private List<Question> listOfQuestions;
+    protected static List<Question> listOfQuestions;
+    private static ArrayList<String> listOfAnswers;
     private int questionsSetCompleted = 0;
     private String level;
+
+    final Bundle loaderBundle = new Bundle();
+    final LoaderManager loaderManager = getSupportLoaderManager();
+
 
 
     @Override
@@ -86,7 +93,6 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
 
         Intent intent = getIntent();
         level = "";
-        final Bundle loaderBundle = new Bundle();
         if (intent != null) {
             level = intent.getStringExtra("level");
             if (level != null)
@@ -121,7 +127,7 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
         questionsSetCompleted = levelPrefs.getInt(PREF_SET_KEY, 0);
 
         //below section is triggering the Loader to load data.
-        final LoaderManager loaderManager = getSupportLoaderManager();
+
         Loader<String> quizFileLoader = loaderManager.getLoader(QUIZ_LOADER_ID);
 
         if (quizFileLoader == null) {
@@ -136,6 +142,7 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onClick(View view) {
                 chosenAnswer = checkAndValidateAnswer(optionOneTextView.getText().toString(), questionsAttended);
+                listOfAnswers.add(questionsAttended,optionOneTextView.getText().toString());
                 updateCardColors(optionOneCard);
             }
         });
@@ -145,6 +152,7 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
             public void onClick(View view) {
                 chosenAnswer = checkAndValidateAnswer(optionTwoTextView.getText().toString(), questionsAttended);
                 updateCardColors(optionTwoCard);
+                listOfAnswers.add(questionsAttended,optionTwoTextView.getText().toString());
             }
         });
 
@@ -152,6 +160,7 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onClick(View view) {
                 chosenAnswer = checkAndValidateAnswer(optionThreeTextView.getText().toString(), questionsAttended);
+                listOfAnswers.add(questionsAttended,optionThreeTextView.getText().toString());
                 updateCardColors(optionThreeCard);
             }
         });
@@ -160,6 +169,7 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onClick(View view) {
                 chosenAnswer = checkAndValidateAnswer(optionFourTextView.getText().toString(), questionsAttended);
+                listOfAnswers.add(questionsAttended,optionFourTextView.getText().toString());
                 updateCardColors(optionFourCard);
             }
         });
@@ -167,12 +177,13 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (chosenAnswer)
                     questionsAnsweredCorrect++;
                 Toast.makeText(getApplicationContext(), "Answered Correct: " + questionsAnsweredCorrect, Toast.LENGTH_SHORT).show();
                 questionsAttended++;
                 if (questionsAttended == listOfQuestions.size()) {
-                    showResultDialog((questionsAnsweredCorrect*100)/listOfQuestions.size(),loaderBundle,loaderManager);
+                    showResultDialog((questionsAnsweredCorrect*100)/listOfQuestions.size());
                     return;
                 }
                 updateCount();
@@ -184,18 +195,19 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
 
     }
 
-    private void showResultDialog(int score, final Bundle loaderBundle, final LoaderManager loaderManager) {
+    private void showResultDialog(int score) {
         View view= LayoutInflater.from(getApplicationContext()).inflate(R.layout.dialog_quiz_result,null);
         TextView resultHeader = view.findViewById(R.id.resultHeaderID);
         TextView result = view.findViewById(R.id.resultTextID);
-        Button tryAgain= view.findViewById(R.id.quizAgainID);
-        Button tryNext = view.findViewById(R.id.quizNextID);
+        ImageView tryAgain= view.findViewById(R.id.quizAgainID);
+        ImageView tryNext = view.findViewById(R.id.quizNextID);
         Button exitQuiz = view.findViewById(R.id.quizExitID);
-        Button shareQuiz = view.findViewById(R.id.quizShareID);
-        Button reviewQuiz = view.findViewById(R.id.reviewQuizID);
-        ProgressBar resultProgressBar = view.findViewById(R.id.resultprogressBarID);
+        ImageView shareQuiz = view.findViewById(R.id.quizShareID);
+        ImageView reviewQuiz = view.findViewById(R.id.reviewQuizID);
+        ContentLoadingProgressBar resultProgressBar = view.findViewById(R.id.resultprogressBarID);
 
         result.setText(score+"%");
+        resultProgressBar.setIndeterminate(false);
         resultProgressBar.setMax(100);
         resultProgressBar.setProgress(score);
 
@@ -256,7 +268,7 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
         tryNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    questionsSetCompleted++;
+                questionsSetCompleted++;
                 SharedPreferences.Editor editor = levelPrefs.edit();
                 editor.putInt(PREF_SET_KEY, questionsSetCompleted);
                 editor.apply();
@@ -270,18 +282,26 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onClick(View view) {
                 questionsSetCompleted++;
+                alertDialog.dismiss();
                 SharedPreferences.Editor editor = levelPrefs.edit();
                 editor.putInt(PREF_SET_KEY, questionsSetCompleted);
                 editor.apply();
                 setNextButtonStatus(false);
                 Intent i = new Intent(view.getContext(),QuizHomeActivity.class);
                 startActivity(i);
+                finish();
             }
         });
         reviewQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(),"Review coming soon",Toast.LENGTH_SHORT).show();
+                alertDialog.dismiss();
+                int marks = (questionsAnsweredCorrect*100)/listOfQuestions.size();
+                setNextButtonStatus(false);
+                Intent i = new Intent(QuizActivity.this,ReviewActivity.class);
+                i.putStringArrayListExtra("chosenAnswerslist",listOfAnswers);
+                i.putExtra("score", marks);
+                startActivityForResult(i,2);
             }
         });
 
@@ -470,7 +490,7 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 Log.v("QuizActivity.class", "Finished loading quiz data to ArrayList");
             }
-
+            listOfAnswers = new ArrayList<>(listOfQuestions.size());
             //setting first question values to cards textViews.
             loadQuestionToCards(questionsAttended);
             updateCount();
@@ -512,4 +532,60 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        int score = data.getIntExtra("score",0);
+
+        if(requestCode==2 && resultCode==2)
+        {
+
+            String action= data.getStringExtra("action");
+
+            if (action.equalsIgnoreCase("exit"))
+            {
+                if(score>50)
+                    questionsSetCompleted++;
+                SharedPreferences.Editor editor = levelPrefs.edit();
+                editor.putInt(PREF_SET_KEY, questionsSetCompleted);
+                editor.apply();
+                setNextButtonStatus(false);
+                Intent i = new Intent(QuizActivity.this,QuizHomeActivity.class);
+                startActivity(i);
+                finish();
+            }
+            else if(action.equalsIgnoreCase("tryAgain"))
+            {
+                SharedPreferences.Editor editor = levelPrefs.edit();
+                editor.putInt(PREF_SET_KEY, questionsSetCompleted);
+                editor.apply();
+                setNextButtonStatus(false);
+                startNewSet(loaderManager, loaderBundle);
+            }
+            else if(action.equalsIgnoreCase("tryNext"))
+            {
+                if(questionsSetCompleted==2)
+                {
+                    questionsSetCompleted++;
+                    Toast.makeText(this,"You have completed all the sets.",Toast.LENGTH_SHORT).show();
+                    SharedPreferences.Editor editor = levelPrefs.edit();
+                    editor.putInt(PREF_SET_KEY, questionsSetCompleted);
+                    editor.apply();
+                    setNextButtonStatus(false);
+                    Intent i = new Intent(QuizActivity.this,QuizHomeActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+                else
+                {
+                    questionsSetCompleted++;
+                    SharedPreferences.Editor editor = levelPrefs.edit();
+                    editor.putInt(PREF_SET_KEY, questionsSetCompleted);
+                    editor.apply();
+                    setNextButtonStatus(false);
+                    startNewSet(loaderManager, loaderBundle);
+                }
+            }
+        }
+    }
 }

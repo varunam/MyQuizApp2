@@ -73,7 +73,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardCornerRadius="20dp">
+                app:cardCornerRadius="10dp">
 
                 <TextView
                     android:id="@+id/qa_questionID"

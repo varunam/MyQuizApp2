@@ -3,16 +3,20 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#ffae00"
     android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
+
             android:layout_height="wrap_content"
             android:id="@+id/resultHeaderID"
             android:text="Not bad! You have secured "
+            style="@style/AlertDialog.AppCompat.Light"
             android:textSize="30sp"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
+            android:textStyle="bold"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="30dp"
             android:layout_gravity="center"
@@ -22,14 +26,17 @@
             android:layout_width="match_parent"
             android:layout_height="150dp">
 
-            <ProgressBar
+            <android.support.v4.widget.ContentLoadingProgressBar
                 android:id="@+id/resultprogressBarID"
-                style="?android:attr/progressBarStyle"
+                style="@android:style/Widget.ProgressBar.Horizontal"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
+                android:indeterminate="false"
+                android:progress="50"
                 android:layout_marginStart="50dp"
-                android:layout_marginEnd="50dp"/>
+                android:layout_marginEnd="50dp"
+                android:progressDrawable="@drawable/circular"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -43,49 +50,73 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center"
+            android:layout_marginTop="20dp"
             android:gravity="center"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="20dp">
 
-            android:layout_marginBottom="30dp">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Share"
-                android:layout_gravity="center"
+            <ImageView
                 android:id="@+id/quizShareID"
-                android:layout_marginEnd="20dp"/>
-            <Button
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:elevation="@dimen/cardview_compat_inset_shadow"
+                android:src="@drawable/share" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/reviewQuizID"
+                android:src="@drawable/review_quiz"
+                android:text="Review Quiz"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:elevation="@dimen/cardview_compat_inset_shadow"/>
+
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/reviewQuizID"
-                android:text="Review Quiz"
-                android:layout_marginStart="10dp"/>
-        </LinearLayout>
+                android:text="Try Again"
+                android:src="@drawable/try_again"
+                android:layout_marginStart="10dp"
+                android:id="@+id/quizAgainID"
+                android:layout_marginEnd="10dp"
+                android:elevation="@dimen/cardview_compat_inset_shadow"
+                />
 
-        
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:text="Try Next"
+                android:src="@drawable/try_next"
+                android:layout_marginStart="10dp"
+                android:id="@+id/quizNextID"
+                android:layout_marginEnd="10dp"
+                android:elevation="@dimen/cardview_compat_inset_shadow"/>
+
+
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
-            android:layout_marginBottom="30dp">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Try Next"
-                android:layout_marginStart="20dp"
-                android:id="@+id/quizNextID"
-                android:layout_marginEnd="10dp"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Try Again"
-                android:layout_marginStart="10dp"
-                android:id="@+id/quizAgainID"
-                android:layout_marginEnd="10dp"/>
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp">
+
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Exit"
+                android:textStyle="bold"
+                android:elevation="@dimen/cardview_compat_inset_shadow"
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                android:background="#048af1"
                 android:id="@+id/quizExitID"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="20dp"/>

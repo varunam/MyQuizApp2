@@ -11,8 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity"></activity>
-        <activity android:name=".QuizActivity">
-        </activity>
+        <activity android:name=".QuizActivity"></activity>
 
         <meta-data
             android:name="android.max_aspect"
@@ -25,6 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ReviewActivity"></activity>
     </application>
 
 </manifest>
