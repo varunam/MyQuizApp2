@@ -71,6 +71,7 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final String PREF_SET_KEY = "set-key";
 
     private static final int WRITE_STORAGE_PERMISSION_GRANTED = 100, READ_STORAGE_PERMISSION_GRANTED = 101;
+    private static final String THIS_ACTIVITY = "QuizActivity.class";
     protected static List<Question> listOfQuestions;
     private static ArrayList<String> listOfAnswers;
     final Bundle loaderBundle = new Bundle();
@@ -81,14 +82,14 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
     private Button nextButton;
     private AlertDialog.Builder builder;
     private SharedPreferences levelPrefs;
-    private boolean chosenAnswer = false;
+    private boolean chosenAnswer = false, dataLoaded = false;
     private int questionsAttended = 0, questionsAnsweredCorrect = 0;
     private int questionsSetCompleted = 0;
     private String level;
 
     public static Bitmap loadLargeBitmapFromView(View v) {
         int spec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-        v.measure(spec,spec);
+        v.measure(spec, spec);
         v.layout(0, 0, v.getMeasuredWidth(), v.getMeasuredHeight());
         Bitmap b = Bitmap.createBitmap(v.getMeasuredWidth(), v.getMeasuredHeight(), Bitmap.Config.RGB_565);
         Canvas c = new Canvas(b);
@@ -100,6 +101,7 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_activity);
+        Log.d(THIS_ACTIVITY, "onCreate() called");
 
         //initializing all the views
         initViews();
@@ -110,8 +112,8 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
         if (savedInstanceState != null) {
             questionsAttended = savedInstanceState.getInt(CURRENT_INDEX_KEY);
             questionsAnsweredCorrect = savedInstanceState.getInt(CORRECT_ANSWERS_COUNT);
-            Log.d("QuizActivity.class", "CURRENT INDEX " + questionsAttended + " is received in onCreate()");
-            Log.d("QuizActivity.class", "CORRECT ANSWERS COUNT " + questionsAnsweredCorrect +
+            Log.d(THIS_ACTIVITY, "CURRENT INDEX " + questionsAttended + " is received in onCreate()");
+            Log.d(THIS_ACTIVITY, "CORRECT ANSWERS COUNT " + questionsAnsweredCorrect +
                     "is received in onCreate()");
         }
 
@@ -127,7 +129,7 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
                         int easySetsCompleted = levelPrefs.getInt(PREF_EASY_SETS_COMPLETED, 0);
                         loaderBundle.putString(LEVEL_KEY, LEVEL_EASY);
                         questionsSetCompleted = easySetsCompleted;
-                        Log.d("QuizActivity.class", "LoaderBundle is loaded with \"EASY\" Value");
+                        Log.d(THIS_ACTIVITY, "LoaderBundle is loaded with \"EASY\" Value");
                         break;
                     case LEVEL_INTERMEDIATE:
                         levelPrefs = getSharedPreferences(
@@ -156,15 +158,17 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
 
         if (quizFileLoader == null) {
             loaderManager.initLoader(QUIZ_LOADER_ID, loaderBundle, this);
-            Log.v("QuizActivity.class", "Initiated Loader");
+            Log.v(THIS_ACTIVITY, "Initiated Loader");
         } else {
             loaderManager.restartLoader(QUIZ_LOADER_ID, loaderBundle, this);
-            Log.v("QuizActivity.class", "Restarted Loader");
+            Log.v(THIS_ACTIVITY, "Restarted Loader");
         }
 
         optionOneCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(questionsAttended==listOfQuestions.size())
+                    return;
                 chosenAnswer = checkAndValidateAnswer(optionOneTextView.getText().toString(), questionsAttended);
                 listOfAnswers.add(questionsAttended, optionOneTextView.getText().toString());
                 updateCardColors(optionOneCard);
@@ -174,6 +178,8 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
         optionTwoCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(questionsAttended==listOfQuestions.size())
+                    return;
                 chosenAnswer = checkAndValidateAnswer(optionTwoTextView.getText().toString(), questionsAttended);
                 updateCardColors(optionTwoCard);
                 listOfAnswers.add(questionsAttended, optionTwoTextView.getText().toString());
@@ -183,6 +189,8 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
         optionThreeCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(questionsAttended==listOfQuestions.size())
+                    return;
                 chosenAnswer = checkAndValidateAnswer(optionThreeTextView.getText().toString(), questionsAttended);
                 listOfAnswers.add(questionsAttended, optionThreeTextView.getText().toString());
                 updateCardColors(optionThreeCard);
@@ -192,6 +200,8 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
         optionFourCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(questionsAttended==listOfQuestions.size())
+                    return;
                 chosenAnswer = checkAndValidateAnswer(optionFourTextView.getText().toString(), questionsAttended);
                 listOfAnswers.add(questionsAttended, optionFourTextView.getText().toString());
                 updateCardColors(optionFourCard);
@@ -347,6 +357,7 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
         questionsAttended = 0;
         questionsAnsweredCorrect = 0;
         questionsSetCompleted = levelPrefs.getInt(PREF_SET_KEY, 0);
+        dataLoaded = false;
         loaderManager.restartLoader(QUIZ_LOADER_ID, savedInstanceState, QuizActivity.this);
     }
 
@@ -403,7 +414,7 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
             answeredCorrect = true;
 
         setNextButtonStatus(true);
-        Log.v("QuizActivity.class", "Option Selected: " + optionSelected +
+        Log.v(THIS_ACTIVITY, "Option Selected: " + optionSelected +
                 "\nCorrect Answer: " + correctAnswer);
         return answeredCorrect;
     }
@@ -449,10 +460,10 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
                     StringBuilder stringBuilder = new StringBuilder();
                     while ((buffer = bufferedReader.readLine()) != null)
                         stringBuilder.append(buffer);
-                    Log.v("QuizActivity.class", "Returned Json String read from the file");
+                    Log.v(THIS_ACTIVITY, "Returned Json String read from the file");
                     return stringBuilder.toString();
                 } catch (IOException e) {
-                    //Log.e("QuizActivity.class", "Error while reading " + bundle.getString(LEVEL_KEY) + " file from assets folder");
+                    //Log.e(THIS_ACTIVITY, "Error while reading " + bundle.getString(LEVEL_KEY) + " file from assets folder");
                     e.printStackTrace();
                     return null;
                 }
@@ -467,9 +478,47 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
                 super.onStartLoading();
                 if (bundle == null)
                     return;
-                forceLoad();
+                if (!dataLoaded)
+                    forceLoad();
+                Log.d(THIS_ACTIVITY, "onStartLoading() with forceload() called");
             }
         };
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(THIS_ACTIVITY, "onStart() called");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(THIS_ACTIVITY, "onPause() called");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(THIS_ACTIVITY, "onResume() called");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(THIS_ACTIVITY, "onRestart() called");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(THIS_ACTIVITY, "onDestroy() called");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(THIS_ACTIVITY, "onStop() called");
     }
 
     /**
@@ -484,20 +533,20 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<String> loader, String jsonString) {
         try {
-            Log.v("QuizActivity.class", "Json Extracted: \n" + jsonString);
+            Log.v(THIS_ACTIVITY, "Json Extracted: \n" + jsonString);
             JSONObject quizParentObject = new JSONObject(jsonString);
             //TODO(5) replace "Questions" by constant value
             JSONObject questionSets = quizParentObject.getJSONObject("Questions");
-            Log.v("QuizActivity.class", "Extracted JSONObject for Questions");
+            Log.v(THIS_ACTIVITY, "Extracted JSONObject for Questions");
             //TODO(6) need to replace 1 in below line of code by count stored in sharedPrefs
             JSONArray requiredSetOfQuestions = questionSets.getJSONArray("Questions set " + questionsSetCompleted);
-            Log.v("QuizActivity.class", "Extracted question set");
+            Log.v(THIS_ACTIVITY, "Extracted question set");
             for (int i = 0; i < requiredSetOfQuestions.length(); i++) {
                 String question = requiredSetOfQuestions.getJSONObject(i).getString("Question");
-                Log.v("QuizActivity.class", "Question: " + question);
+                Log.v(THIS_ACTIVITY, "Question: " + question);
                 JSONObject options = requiredSetOfQuestions.getJSONObject(i).getJSONObject("options");
                 String option1 = options.getString("one");
-                Log.v("QuizActivity.class", "Option One: " + option1);
+                Log.v(THIS_ACTIVITY, "Option One: " + option1);
                 String option2 = options.getString("two");
                 String option3 = options.getString("three");
                 String option4 = options.getString("four");
@@ -506,20 +555,20 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
                         option1, option2, option3, option4}, solution);
                 listOfQuestions.add(newQuestion);
 
-                Log.v("QuizActivity.class", "Finished loading quiz data to ArrayList");
+                Log.v(THIS_ACTIVITY, "Finished loading quiz data to ArrayList");
             }
             listOfAnswers = new ArrayList<>(listOfQuestions.size());
             //setting first question values to cards textViews.
             loadQuestionToCards(questionsAttended);
             updateCount();
-
-            Log.v("QuizActivity.class", "Finished setting first question on UI");
+            dataLoaded = true;
+            Log.v(THIS_ACTIVITY, "Finished setting first question on UI");
 
         } catch (JSONException e) {
-            Log.e("QuizActivity.class", "Error parsing \n" + jsonString + "\n to JSON");
+            Log.e(THIS_ACTIVITY, "Error parsing \n" + jsonString + "\n to JSON");
             e.printStackTrace();
         }
-        Toast.makeText(getApplicationContext(), "LoadingFinished", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "LoadingFinished", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -636,7 +685,7 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private Bitmap getScreenShot(View view) {
-        Log.d("QuizActivity.class", "getScreenShot()");
+        Log.d(THIS_ACTIVITY, "getScreenShot()");
         View screenView = view.getRootView();
         screenView.setDrawingCacheEnabled(true);
         screenView.buildDrawingCache();
@@ -650,7 +699,7 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     public void storeAndShare(Bitmap bm, String fileName, String message) {
-        Log.d("QuizActivity.class", "storeAndShare()");
+        Log.d(THIS_ACTIVITY, "storeAndShare()");
         final String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/QuizAppScreenshots";
         File dir = new File(dirPath);
         if (!dir.exists())
@@ -668,7 +717,7 @@ public class QuizActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private void shareImage(File file, String message) {
-        Log.d("QuizActivity.class", "shareImage()");
+        Log.d(THIS_ACTIVITY, "shareImage()");
         Uri uri = Uri.fromFile(file);
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
