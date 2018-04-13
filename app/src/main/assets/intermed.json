@@ -1,0 +1,414 @@
+{
+  "Questions": {
+    "Questions set 0": [
+      {
+        "Question": "Translate to Kannada \nEyes - _______",
+        "solution": 2,
+        "options": {
+          "one": "kivigaLu",
+          "two": "kaNNugaLu",
+          "three": "kaigaLu",
+          "four": "kaalugaLu"
+        }
+      },
+      {
+        "Question": "Translate to Kannada \n Nose - _______",
+        "solution": 1,
+        "options": {
+          "one": "moogu",
+          "two": "kaalu",
+          "three": "hubbu",
+          "four": "thuTi"
+        }
+      },
+      {
+        "Question": "Eng: I like this book \n Kan: nanage ee _______ andare ishTa",
+        "solution": 1,
+        "options": {
+          "one": "pusthaka",
+          "two": "mEju",
+          "three": "kurchi",
+          "four": "kannaDaka"
+        }
+      },
+      {
+        "Question": "Translate to Kannada \n Bell - ________",
+        "solution": 1,
+        "options": {
+          "one": "ghanTe",
+          "two": "ghanTegaLu",
+          "three": "bellu",
+          "four": "bellugaLu"
+        }
+      },
+      {
+        "Question": "Translate to Kannada \n Game - ________",
+        "solution": 3,
+        "options": {
+          "one": "paaTa",
+          "two": "kaaTa",
+          "three": "aaTa",
+          "four": "none"
+        }
+      },
+      {
+        "Question": "Root Verb: Listen - kELu \n Past-Tense: __________?",
+        "solution": 2,
+        "options": {
+          "one": "kELi",
+          "two": "kELide",
+          "three": "kELade",
+          "four": "kELuttaa"
+        }
+      },
+      {
+        "Question": "Translate to Kannada \n Done? - ________",
+        "solution": 4,
+        "options": {
+          "one": "aaythu?",
+          "two": "aagilla?",
+          "three": "maadaayta?",
+          "four": "aaytha?"
+        }
+      },
+      {
+        "Question": "Translate to Kannada \n Above - ________",
+        "solution": 3,
+        "options": {
+          "one": "keLage",
+          "two": "hinde",
+          "three": "mEle",
+          "four": "none"
+        }
+      },
+      {
+        "Question": "Eng: This is my book \n Kan: idu ________ pusthaka",
+        "solution": 3,
+        "options": {
+          "one": "namma",
+          "two": "nimma",
+          "three": "nanna",
+          "four": "ninna"
+        }
+      },
+      {
+        "Question": "Translate to Kannada \n Rare - ________",
+        "solution": 1,
+        "options": {
+          "one": "viraLa",
+          "two": "hEraLa",
+          "three": "saraLa",
+          "four": "maraLa"
+        }
+      }
+    ],
+    "Questions set 1": [
+      {
+        "Question": "Translate to Kannada \n He(s) - _______",
+        "solution": 3,
+        "options": {
+          "one": "avaru",
+          "two": "avanige",
+          "three": "avanu",
+          "four": "avarige"
+        }
+      },
+      {
+        "Question": "Translate to Kannada \n She(s) - _______",
+        "solution": 1,
+        "options": {
+          "one": "avaLu",
+          "two": "avaru",
+          "three": "avaLige",
+          "four": "avaLadu"
+        }
+      },
+      {
+        "Question": "Eng: I have parked my car there. \n Kan: nanna car ______ park madiddeeni",
+        "solution": 3,
+        "options": {
+          "one": "elli",
+          "two": "illi",
+          "three": "alli",
+          "four": "both 2 and 3"
+        }
+      },
+      {
+        "Question": "Where is your office? \n Kan: nimma office ______ ide?",
+        "solution": 1,
+        "options": {
+          "one": "elli",
+          "two": "illi",
+          "three": "alli",
+          "four": "ellige"
+        }
+      },
+      {
+        "Question": "Why is the bus late? \n bus tada ________",
+        "solution": 3,
+        "options": {
+          "one": "elli?",
+          "two": "yaarige?",
+          "three": "Eke/yaake?",
+          "four": "hEge?"
+        }
+      },
+      {
+        "Question": "Which is your bike? \n Kan: nimma bike _______?",
+        "solution": 2,
+        "options": {
+          "one": "elli?",
+          "two": "yaavudu?",
+          "three": "yaake?",
+          "four": "yaarige?"
+        }
+      },
+      {
+        "Question": "whose this bike is? \n Kan: ee bike ________",
+        "solution": 4,
+        "options": {
+          "one": "elli?",
+          "two": "yaavudu?",
+          "three": "yaake?",
+          "four": "yaaradu?"
+        }
+      },
+      {
+        "Question": "Translate to Kannada \n Office - ________",
+        "solution": 3,
+        "options": {
+          "one": "mane",
+          "two": "angaDi",
+          "three": "kachEri",
+          "four": "none"
+        }
+      },
+      {
+        "Question": "Eng: Who is your father? \n Kan: ninna/nimma appa ________",
+        "solution": 3,
+        "options": {
+          "one": "yaaradu?",
+          "two": "yaavudu?",
+          "three": "yaaru?",
+          "four": "yaarige?"
+        }
+      },
+      {
+        "Question": "This gift is for her(wr) \n ee uDugore ________",
+        "solution": 1,
+        "options": {
+          "one": "avaLige",
+          "two": "avarige",
+          "three": "avanige",
+          "four": "ivanige"
+        }
+      }
+    ],
+    "Questions set 2": [
+
+      {
+        "Question": "Translate to Kannada \n Hi/Hello - _______",
+        "solution": 2,
+        "options": {
+          "one": "hEgiddeera?",
+          "two": "namaskaara",
+          "three": "shubhodaya",
+          "four": "namaskaaram"
+        }
+      },
+      {
+        "Question": "Translate to Kannada \n Welcome - _______",
+        "solution": 1,
+        "options": {
+          "one": "suswaagatha",
+          "two": "namaskaara",
+          "three": "shubhodaya",
+          "four": "none"
+        }
+      },
+      {
+        "Question": "Eng: Today is Sunday \n Kan: _______ Sunday",
+        "solution": 4,
+        "options": {
+          "one": "naale",
+          "two": "ninne",
+          "three": "monne",
+          "four": "ivattu"
+        }
+      },
+      {
+        "Question": "Translate to Kannada \n Day after tomorrow - ________",
+        "solution": 1,
+        "options": {
+          "one": "naaDiddu",
+          "two": "naaLe",
+          "three": "ninne",
+          "four": "monne"
+        }
+      },
+      {
+        "Question": "Translate to Kannada \n Day before yesterday - ________",
+        "solution": 3,
+        "options": {
+          "one": "naaDiddu",
+          "two": "naaLe",
+          "three": "monne",
+          "four": "ninne"
+        }
+      },
+      {
+        "Question": "Eng: I will come later \n Kan: naanu _______ bartini",
+        "solution": 2,
+        "options": {
+          "one": "naaLe",
+          "two": "aamele",
+          "three": "monne",
+          "four": "naaDiddu"
+        }
+      },
+      {
+        "Question": "Translate to Kannada \n Later - ________",
+        "solution": 4,
+        "options": {
+          "one": "eega",
+          "two": "naaLe",
+          "three": "munde",
+          "four": "aamele"
+        }
+      },
+      {
+        "Question": "Translate to Kannada \n Morning - ________",
+        "solution": 3,
+        "options": {
+          "one": "raatri",
+          "two": "sanje",
+          "three": "beLigge",
+          "four": "madhyaana"
+        }
+      },
+      {
+        "Question": "Eng: I am having breakfast \n Kan: naanu _______ tinnuttaa iddeeni",
+        "solution": 2,
+        "options": {
+          "one": "Uta",
+          "two": "thinDi",
+          "three": "both",
+          "four": "none"
+        }
+      },
+      {
+        "Question": "Translate to Kannada \n Go(s/wr) - ________",
+        "solution": 3,
+        "options": {
+          "one": "hOgu(s)",
+          "two": "hOgi(wr)",
+          "three": "hOgu(s) / hOgi (wr)",
+          "four": "All of the above"
+        }
+      }
+    ],
+    "Questions set 3": [
+
+      {
+        "Question": "Translate to Kannada \n Eat - _______",
+        "solution": 2,
+        "options": {
+          "one": "tinde",
+          "two": "tinnu",
+          "three": "tindaytu",
+          "four": "tinnuttaa"
+        }
+      },
+      {
+        "Question": "Eng: Please come(wr) \n Kan: _______ banni",
+        "solution": 1,
+        "options": {
+          "one": "dayaviTTu",
+          "two": "dayetOrisi",
+          "three": "dayeyillade",
+          "four": "none"
+        }
+      },
+      {
+        "Question": "Eng: I hate vegetables \n Kan: nanage ___________ andare ishTa illa",
+        "solution": 4,
+        "options": {
+          "one": "haNNugaLu",
+          "two": "kaNNugaLu",
+          "three": "tondaregaLu",
+          "four": "tarakaarigaLu"
+        }
+      },
+      {
+        "Question": "Translate to Kannada \n Evening - ________",
+        "solution": 3,
+        "options": {
+          "one": "Sanje",
+          "two": "Saayankaala",
+          "three": "Both",
+          "four": "None"
+        }
+      },
+      {
+        "Question": "Translate to Kannada \n Work - ________",
+        "solution": 2,
+        "options": {
+          "one": "kalasa",
+          "two": "kelasa",
+          "three": "keelsa",
+          "four": "none"
+        }
+      },
+      {
+        "Question": "Eng: I will do it \n Kan: naanu adanna _________",
+        "solution": 3,
+        "options": {
+          "one": "tintini",
+          "two": "kuDitini",
+          "three": "maaDtini",
+          "four": "kuNitini"
+        }
+      },
+      {
+        "Question": "Translate to Kannada \n Correct and Incorrect - ________",
+        "solution": 4,
+        "options": {
+          "one": "sari mattu theppu",
+          "two": "sori mattu tappu",
+          "three": "tappu mattu sari",
+          "four": "sari mattu tappu"
+        }
+      },
+      {
+        "Question": "Eng: Which is this place? \n Kan: ee ______ yaavudu?",
+        "solution": 4,
+        "options": {
+          "one": "ooru",
+          "two": "sthaLa",
+          "three": "jaaga",
+          "four": "All"
+        }
+      },
+      {
+        "Question": "Eng: What is his name? \n Kan: avana _______ Enu?",
+        "solution":3,
+        "options": {
+          "one": "naamadheya",
+          "two": "hesaru",
+          "three": "both",
+          "four": "neither"
+        }
+      },
+      {
+        "Question": "Translate to Kannada \n Done? - ________",
+        "solution": 3,
+        "options": {
+          "one": "mugithu",
+          "two": "aaythu",
+          "three": "aaytha?",
+          "four": "mugitha?"
+        }
+      }
+    ]
+  }
+}
